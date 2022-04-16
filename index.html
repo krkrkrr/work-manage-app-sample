@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        table {
+            border: 2px solid;
+        }
+    </style>
+    <title>社内アプリのサンプル</title>
+</head>
+
+<body>
+    <h1>社内アプリのサンプル</h1>
+    <form>
+        <div>
+            <label for="form-staff">
+                名前
+            </label>
+            <select name="staff" id="form-staff" required>
+                <option>選択してください</option>
+                <option value="鈴木">鈴木</option>
+                <option value="石橋">石橋</option>
+                <option value="豊田">豊田</option>
+            </select>
+        </div>
+        <div>
+            どこまで進めたか
+            <input type="datetime" name="edit-timestamp" id="">
+        </div>
+        <div>
+            <label for="form-edit-timestamp" id="form-edit-timestamp">
+                編集を完了したか
+            </label>
+            <select name="edit-finished" id="form-edit-finished" required>
+                <option>選択してください</option>
+                <option value="0">未完</option>
+                <option value="1">完了</option>
+            </select>
+        </div>
+        <div>
+            <button onclick="">送信</button>
+        </div>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <? for(const col of columns) { ?>
+                <th>
+                    <?= col ?>
+                </th>
+                <? } ?>
+            </tr>
+        </thead>
+        <tbody>
+            <? for(const row of rows) { ?>
+            <tr>
+                <? for(const item of row) { ?>
+                <td>
+                    <?= item ?>
+                </td>
+                <? } ?>
+            </tr>
+            <? } ?>
+        </tbody>
+    </table>
+</body>
+
+</html>
