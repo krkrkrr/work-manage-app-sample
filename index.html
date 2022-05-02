@@ -6,44 +6,96 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        form {
+            border: 3px solid;
+            padding: 2%;
+            margin: 1%;
+        }
+
         table {
             border: 2px solid;
+            padding: 2%;
+            margin: 1%;
+        }
+
+        thead>tr {
+            background: rgba(0, 0, 0, 0.199);
+        }
+
+        tbody>tr:nth-child(2n+1) {
+            background: rgba(0, 0, 0, 0.144);
         }
     </style>
+    <script>
+        function onSuccess() {
+            alert("success")
+        }
+
+        function onSubmit(event) {
+            alert("submit")
+
+            const target = event.target
+
+            const res = {
+                "staff": target.staff.value,
+                "edit-timestamp": target.edit_timestamp.value,
+                "edit-finished": target.edit_finished.value == "1"
+            }
+            alert("submit pre google run")
+            google.script.run
+                .withSuccessHandler(onSuccess)
+                .postSpreadsheet(res)
+
+            event.preventDefault()
+            event.stopPropagation()
+
+            alert("submit finished")
+        }
+
+        window.onload = () => {
+            document.forms[0].addEventListener("submit", onSubmit, false)
+        }
+    </script>
     <title>社内アプリのサンプル</title>
 </head>
 
 <body>
     <h1>社内アプリのサンプル</h1>
     <form>
-        <div>
-            <label for="form-staff">
+        <p>
+            <label>
                 名前
+                <br>
+                <select name="staff" required>
+                    <option value="">選択してください</option>
+                    <option value="鈴木">鈴木</option>
+                    <option value="石橋">石橋</option>
+                    <option value="豊田">豊田</option>
+                </select>
             </label>
-            <select name="staff" id="form-staff" required>
-                <option>選択してください</option>
-                <option value="鈴木">鈴木</option>
-                <option value="石橋">石橋</option>
-                <option value="豊田">豊田</option>
-            </select>
-        </div>
-        <div>
-            どこまで進めたか
-            <input type="datetime" name="edit-timestamp" id="">
-        </div>
-        <div>
-            <label for="form-edit-timestamp" id="form-edit-timestamp">
+
+        </p>
+        <p>
+            <label>
+                どこまで進めたか
+                <br>
+                <input type="time" name="edit_timestamp" value="00:00" required>
+            </label>
+        </p>
+        <p>
+            <label>
                 編集を完了したか
+                <br>
+                <select name="edit_finished" required>
+                    <option value="">選択してください</option>
+                    <option value="0">未完</option>
+                    <option value="1">完了</option>
+                </select>
             </label>
-            <select name="edit-finished" id="form-edit-finished" required>
-                <option>選択してください</option>
-                <option value="0">未完</option>
-                <option value="1">完了</option>
-            </select>
-        </div>
-        <div>
-            <button onclick="">送信</button>
-        </div>
+        </p>
+        <p>
+            <button type="submit">送信</button>
+        </p>
     </form>
     <table>
         <thead>
