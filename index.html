@@ -6,20 +6,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        #form-nav {
+            display: flex;
+            flex-direction: row;
+            transform: translateY(3px);
+        }
+
+        #form-nav>div {
+            border: 3px solid;
+            padding: 2px;
+            margin: 0 10px 0 0;
+        }
+
         form {
             border: 3px solid;
+        }
+
+        section {
+
             padding: 2%;
             margin: 1%;
         }
 
-        table {
-            border: 2px solid;
-            padding: 2%;
-            margin: 1%;
+        .hidden {
+            display: none;
+        }
+
+        .active {
+            text-decoration: underline;
         }
 
         thead>tr {
-            background: rgba(0, 0, 0, 0.199);
+            background: rgba(0, 0, 0, 0.26);
         }
 
         tbody>tr:nth-child(2n+1) {
@@ -29,6 +47,25 @@
     <script>
         function onSuccess() {
             alert("success")
+        }
+
+        function onActive(event) {
+            const target = event.target
+
+            if ("form-nav" == target.id) {
+                return
+            }
+
+            const children = target.parentNode.children
+            for (let i = 0; i < children.length; i++) {
+                children[i].classList.remove("active")
+                document.forms[i].classList.add("hidden")
+
+                if (target === children[i]) {
+                    document.forms[i].classList.remove("hidden")
+                    target.classList.add("active")
+                }
+            }
         }
 
         function onSubmit(event) {
@@ -53,7 +90,11 @@
         }
 
         window.onload = () => {
-            document.forms[0].addEventListener("submit", onSubmit, false)
+            for (const elem of document.forms) {
+                elem.addEventListener("submit", onSubmit, false)
+            }
+            document.getElementById("form-nav")
+                .addEventListener("click", onActive, false)
         }
     </script>
     <title>社内アプリのサンプル</title>
@@ -61,64 +102,95 @@
 
 <body>
     <h1>社内アプリのサンプル</h1>
-    <form>
-        <p>
-            <label>
-                名前
-                <br>
-                <select name="staff" required>
-                    <option value="">選択してください</option>
-                    <option value="鈴木">鈴木</option>
-                    <option value="石橋">石橋</option>
-                    <option value="豊田">豊田</option>
-                </select>
-            </label>
+    <section>
+        <div id="form-nav">
+            <div class="active">
+                開始
+            </div>
+            <div>
+                終了
+            </div>
+        </div>
+        <div>
+            <form>
+                <p>
+                    <label>
+                        名前
+                        <br>
+                        <select name="staff" required>
+                            <option value="">選択してください</option>
+                            <option value="鈴木">鈴木</option>
+                            <option value="石橋">石橋</option>
+                            <option value="豊田">豊田</option>
+                        </select>
+                    </label>
+                </p>
+                <p>
+                    <button type="submit">送信</button>
+                </p>
+            </form>
+            <form class="hidden">
+                <p>
+                    <label>
+                        名前
+                        <br>
+                        <select name="staff" required>
+                            <option value="">選択してください</option>
+                            <option value="鈴木">鈴木</option>
+                            <option value="石橋">石橋</option>
+                            <option value="豊田">豊田</option>
+                        </select>
+                    </label>
 
-        </p>
-        <p>
-            <label>
-                どこまで進めたか
-                <br>
-                <input type="time" name="edit_timestamp" value="00:00" required>
-            </label>
-        </p>
-        <p>
-            <label>
-                編集を完了したか
-                <br>
-                <select name="edit_finished" required>
-                    <option value="">選択してください</option>
-                    <option value="0">未完</option>
-                    <option value="1">完了</option>
-                </select>
-            </label>
-        </p>
-        <p>
-            <button type="submit">送信</button>
-        </p>
-    </form>
-    <table>
-        <thead>
-            <tr>
-                <? for(const col of columns) { ?>
-                <th>
-                    <?= col ?>
-                </th>
+                </p>
+                <p>
+                    <label>
+                        どこまで進めたか
+                        <br>
+                        <input type="time" name="edit_timestamp" value="00:00" required>
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        編集を完了したか
+                        <br>
+                        <select name="edit_finished" required>
+                            <option value="">選択してください</option>
+                            <option value="0">未完</option>
+                            <option value="1">完了</option>
+                        </select>
+                    </label>
+                </p>
+                <p>
+                    <button type="submit">送信</button>
+                </p>
+            </form>
+        </div>
+    </section>
+    <section>
+        <table>
+            <thead>
+                <tr>
+                    <? for(const col of columns) { ?>
+                    <th>
+                        <?= col ?>
+                    </th>
+                    <? } ?>
+                </tr>
+            </thead>
+            <tbody>
+                <? for(const row of rows) { ?>
+                <tr>
+                    <? for(const item of row) { ?>
+                    <td>
+                        <?= item ?>
+                    </td>
+                    <? } ?>
+                </tr>
                 <? } ?>
-            </tr>
-        </thead>
-        <tbody>
-            <? for(const row of rows) { ?>
-            <tr>
-                <? for(const item of row) { ?>
-                <td>
-                    <?= item ?>
-                </td>
-                <? } ?>
-            </tr>
-            <? } ?>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </section>
 </body>
 
 </html>
