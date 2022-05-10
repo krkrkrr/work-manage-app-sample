@@ -43,10 +43,16 @@
         tbody>tr:nth-child(2n+1) {
             background: rgba(0, 0, 0, 0.144);
         }
+
+        #location-url {
+            display: none;
+        }
     </style>
     <script>
         function onSuccess() {
             alert("success")
+            const url = document.getElementById('location-url').textContent
+            window.open(url, '_top')
         }
 
         function onActive(event) {
@@ -69,24 +75,25 @@
         }
 
         function onSubmit(event) {
-            alert("submit")
-
             const target = event.target
 
             const res = {
                 "staff": target.staff.value,
-                "edit-timestamp": target.edit_timestamp.value,
-                "edit-finished": target.edit_finished.value == "1"
             }
-            alert("submit pre google run")
+
+            if ('edit_timestamp' in target) {
+                res['edit-timestamp'] = target.edit_timestamp.value
+            }
+            if ('edit_finished' in target) {
+                res['edit-finished'] = target.edit_finished.value == "1"
+            }
+
             google.script.run
                 .withSuccessHandler(onSuccess)
-                .postSpreadsheet(res)
+                .put(res)
 
             event.preventDefault()
             event.stopPropagation()
-
-            alert("submit finished")
         }
 
         window.onload = () => {
@@ -191,6 +198,9 @@
             </tbody>
         </table>
     </section>
+    <div id="location-url">
+        <?= url ?>
+    </div>
 </body>
 
 </html>
