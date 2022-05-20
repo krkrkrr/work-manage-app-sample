@@ -4,7 +4,7 @@
 
 動画編集作業を想定した工程管理アプリのサンプル。
 スプレッドシートを用いた簡易 DB。
-[デモページ](https://script.google.com/macros/s/AKfycbxEDfqT87eHkpQZDjnnHPTScvxI5icH9Pd2fpVt68rho_1yMnEbmKTWlx2BP3wr_j95/exec)
+[デモページ](https://script.google.com/macros/s/AKfycbxmTALoWhGABXP17xr0uryejsxLd8EBuLXbSbPZVLKHHTcRdQL0ZkFYjhMaGDES_jFoSQ/exec)
 
 ## 必要要件 Requirement
 
